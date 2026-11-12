@@ -12,5 +12,7 @@ const boardStop = {
     if (seg.feature) m.queue.push(seg.feature);
     m.afterFeature(events);
   },
+  // simulator: a skilled player aims for the segment worth most (seg.pays, or seg.worth for a feature)
+  aim: (m, ctx) => ctx.board.reduce((bi, s, i, a) => ((s.pays ?? s.worth ?? 0) > (a[bi].pays ?? a[bi].worth ?? 0) ? i : bi), 0),
 };
 export default boardStop;

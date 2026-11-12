@@ -205,7 +205,7 @@ export function startMachine(config, skin, { canvas = document.getElementById('s
     const leds = skin.leds?.(g) || [
       ['CREDIT', money(disp.credit)],
       m.phase !== 'nudge' && m.nudgeBank > 0 ? ['BANKED', String(m.nudgeBank)] : ['NUDGES', String(m.nudges)],
-      m.trail !== undefined ? ['TRAIL', `${disp.trail}/${config.trail.length}`] : ['WON', money(m.meters.out)],
+      config.scatter ? ['BONUS', `${disp.trail}/${config.scatter.min}`] : m.trail !== undefined ? ['TRAIL', `${disp.trail}/${config.trail.length}`] : ['WON', money(m.meters.out)],
       m.phase === 'free' ? ['FREE', String(m.freeSpins)] : ['PLAYS', String(m.meters.plays)],
     ];
     led(8, 300, 54, ...leds[0]); led(208, 300, 54, ...leds[1]);
@@ -499,6 +499,7 @@ export function startMachine(config, skin, { canvas = document.getElementById('s
         if (e.why === 'threeQ') { say('TOP OF THE TRAIL!'); sound.fanfare(); }
         await runTrailTo(e.value);
         break;
+      case 'series': say(`${e.times} RIDE${e.times === 1 ? '' : 'S'}`, 1200); sound.fanfare(); await wait(800); break;
       case 'trailLost':
         if (disp.trail > 0) { message = 'TRAIL LOST'; sound.lose(); disp.ringFlash = disp.trail; await wait(500); disp.ringFlash = null; disp.trail = 0; disp.held = false; await wait(200); }
         break;

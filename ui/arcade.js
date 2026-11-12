@@ -10,6 +10,8 @@ import goldenGoal from '../machines/golden-goal/config.js';
 import goldenGoalSkin from '../machines/golden-goal/skin.js';
 import supermarket from '../machines/supermarket/config.js';
 import supermarketSkin from '../machines/supermarket/skin.js';
+import thrillPark from '../machines/thrill-park/config.js';
+import thrillParkSkin from '../machines/thrill-park/skin.js';
 import { startMachine } from './shell.js';
 import { money } from './font.js';
 
@@ -19,6 +21,7 @@ const MACHINES = [
   { config: nightCab, skin: nightCabSkin },
   { config: goldenGoal, skin: goldenGoalSkin },
   { config: supermarket, skin: supermarketSkin },
+  { config: thrillPark, skin: thrillParkSkin },
 ];
 
 const lobby = document.getElementById('lobby');
@@ -67,8 +70,8 @@ for (const { config, skin } of MACHINES) {
   li.append(b);
   list.append(li);
 }
-// an empty cabinet for the machines still to come
-{
+// an empty cabinet for the machines still to come, only while it fills a gap in a row of three
+if (MACHINES.length % 3 !== 0) {
   const li = el('li'), b = el('div', 'cabinet soon');
   const screen = el('div', 'screen'), inner = el('div', null, 'NEXT MACHINE COMING SOON');
   screen.append(inner);

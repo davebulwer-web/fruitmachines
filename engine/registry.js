@@ -15,7 +15,9 @@ import pick from './features/pick.js';
 import cashPot from './features/cashPot.js';
 import stepper from './features/stepper.js';
 import penalty from './features/penalty.js';
+import series from './features/series.js';
 import trail from './progressions/trail.js';
+import scatter from './progressions/scatter.js';
 
-export const featureKinds = { nudges, winSpin, ladder, boardStop, freeSpins, mystery, streak, jackpot, diceBoard, loopBoard, hiLo, pick, cashPot, stepper, penalty };
-export const progressions = { trail };
+export const featureKinds = { nudges, winSpin, ladder, boardStop, freeSpins, mystery, streak, jackpot, diceBoard, loopBoard, hiLo, pick, cashPot, stepper, penalty, series };
+export const progressions = { trail, scatter };
