@@ -1,7 +1,8 @@
 // Supermarket top glass: a supermarket aisle behind the lit letters of SUPERMARKET (the trail: each
-// number on the reels lights the next letter, and they stay lit between games). Below them the till:
+// number on the reels lights that many more letters, and they are lost next game unless FEATURE HELD
+// lights). Below them the till:
 // eight features with pictures, and a lamp runs round them to pick one when all 11 letters are lit.
-// Then the Loyalty Points meter (the cash pot) and the Trolley Dash level prizes.
+// Then the Feature Held lamp beside the Loyalty Points meter (the cash pot) and the Trolley Dash level prizes.
 // The Trolley Dash board takes over the screen when it starts (ui/loop-board.js).
 // Art from machines/supermarket/art (see art.js).
 import { boardOf } from '../../engine/features/loopBoard.js';
@@ -45,12 +46,14 @@ function drawTill(g) {
 }
 
 function drawPot(g) {
-  const { frameBox, text, disp, C } = g, x = 8, y = 140, w = g.W - 16;
+  const { frameBox, text, disp, C } = g, x = 76, y = 140, w = g.W - 8 - x;
+  g.heldLamp(8, y, 64, 26);
   const flash = disp.potFlash && g.blink(3);
   frameBox(x, y, w, 26, flash ? '#ffd040' : '#101a30', '#000');
   const icon = g.images.sq_pot;
-  if (icon) g.ctx.drawImage(icon, x + 4, y + 1, 24, 24);
-  text('LOYALTY POINTS', x + 34, y + 9, flash ? '#201008' : C.gold);
+  if (icon) g.ctx.drawImage(icon, x + 3, y + 1, 24, 24);
+  text('LOYALTY', x + 30, y + 4, flash ? '#201008' : C.gold);
+  text('POINTS', x + 30, y + 14, flash ? '#201008' : C.gold);
   frameBox(x + w - 76, y + 3, 72, 20, '#100303', '#000');
   drawSegments(g.ctx, g.money(disp.cashPot), x + w - 72, y + 6, 6, { w: 9, h: 14, gap: 2, on: '#ff4030', off: '#240808', align: 'right' });
 }

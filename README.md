@@ -87,10 +87,9 @@ Features by place: **Free Kick** and **Free Kick ×2** (steppers: the reels step
 Payout: sensible 90.18%, gambler 84.79%, lazy 54.85% (Free Kicks reward timing), a feature every 28 plays.
 
 ## Supermarket
-The trail is the name: numbers on the reels light the letters of SUPERMARKET, and they stay lit from game to game (`trail.keep`).
-Fewer numbers on the reels make it a longer build. The 11th letter starts the feature straight away (`trail.auto`): **The Till** spins a lamp round eight features and stops at random:
+The trail is the name: numbers 1 to 4 on the reels light that many letters of SUPERMARKET. The letters are lost on the next game unless the Feature Held lamp lights (10% plus 2.5% a letter, or from a question mark), so it takes a run of good numbers. The 11th letter starts the feature straight away (`trail.auto`): **The Till** spins a lamp round eight features and stops at random:
 Trolley Dash (4, 5 or 8 trips round a loop board with DOUBLE squares that double the bank), Price Check (hi-lo), Lucky Bag (pick), BOGOF (×2 spins), Express Till (win spin) or Loyalty Points (the cash pot).
-Payout: sensible 90.60%, lazy 68.28%, a feature every 24 plays.
+Payout: sensible 89.77%, gambler 89.64%, lazy 68.55%, a feature every 24 plays.
 
 ## Thrill Park
 Theme park machine, and the first without a trail: some reel stops are a golden **ride ticket** bonus symbol (`progression: { type: 'scatter' }`).

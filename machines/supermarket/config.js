@@ -1,6 +1,7 @@
 // Supermarket: a supermarket machine, the fifth in the series. All amounts in pence.
 // The trail is the machine's name: numbers on the reels light the letters of SUPERMARKET one by one,
-// and they stay lit from game to game. Light all 11 and the till spins to pick your feature: the
+// adding up as they go. The letters are lost on the next game unless the Feature Held lamp lights,
+// so you need a run of good numbers. Light all 11 and the till spins to pick your feature: the
 // Trolley Dash board (with SPECIAL OFFER squares that double your bank), Price Check hi-lo, a Lucky Bag
 // pick, Buy One Get One Free double-money spins, the Express Till win spin or your Loyalty Points
 // (a cash pot that grows on losing plays).
@@ -25,9 +26,9 @@ export default {
 
   // 20 stops per reel, listed top to bottom; nudging moves to the next stop.
   reels: [
-    strip('CH1 LE OR QM PL CH ME LE BE OR SE PL CH LE1 OR OR BA PL ME BE'),
-    strip('LE CH1 PL OR QM ME LE BE CH OR PL SE LE OR LE CH BA PL1 BE ME'),
-    strip('OR LE1 PL CH QM LE ME OR BE PL LE SE OR CH PL LE BA CH BE ME1'),
+    strip('CH1 LE OR3 QM PL CH ME2 LE BE OR SE PL4 CH LE1 OR OR2 BA PL ME3 BE'),
+    strip('LE CH2 PL OR QM ME3 LE BE1 CH OR4 PL SE LE2 OR LE CH BA3 PL1 BE ME'),
+    strip('OR LE1 PL CH3 QM LE ME OR2 BE PL LE4 SE OR CH1 PL LE BA CH BE2 ME3'),
   ],
 
   paytable: [
@@ -46,11 +47,13 @@ export default {
   // Loyalty Points: a cash pot that may tick up 10p after a losing play, from 20p to £4.
   cashPot: { start: 20, add: 10, addChance: 0.04, max: 400 },
 
-  // The letters trail: 11 letters, kept between games; the 11th starts the till spin.
+  // The letters trail: 11 letters; the numbers on the win line add up. Lost on the next game unless
+  // the Feature Held lamp lights (more likely the further along you are). The 11th starts the till spin.
   trail: {
     length: 11,
     featureFrom: 11,
-    keep: true,
+    heldChance: 0.10,
+    heldPerRung: 0.025,
     auto: true,
     threeNumbersJump: false,
     skillStopMax: 8,
@@ -58,7 +61,7 @@ export default {
   },
 
   questionOptions: [
-    { value: 'numbersInView', weight: 25 }, { value: 'boost', weight: 15 }, { value: 'skillStop', weight: 15 },
+    { value: 'held', weight: 25 }, { value: 'numbersInView', weight: 20 }, { value: 'boost', weight: 15 }, { value: 'skillStop', weight: 15 },
     { value: 'addAgain', weight: 20 }, { value: 'nudges', weight: 15 },
   ],
 

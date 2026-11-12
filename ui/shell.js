@@ -116,8 +116,9 @@ export function startMachine(config, skin, { canvas = document.getElementById('s
   };
   const heldLamp = (x, y, w = 70, h = 18) => {
     frameBox(x, y, w, h, disp.held ? C.green : '#1a2a1a', '#000');
-    text('FEATURE', x + w / 2 + 1, y + 2, disp.held ? '#042' : C.dim, { align: 'center' });
-    text('HELD', x + w / 2 + 1, y + 10, disp.held ? '#042' : C.dim, { align: 'center' });
+    const ty = y + Math.round((h - 18) / 2);
+    text('FEATURE', x + w / 2 + 1, ty + 2, disp.held ? '#042' : C.dim, { align: 'center' });
+    text('HELD', x + w / 2 + 1, ty + 10, disp.held ? '#042' : C.dim, { align: 'center' });
   };
 
   const g = {
