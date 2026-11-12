@@ -101,3 +101,9 @@ Then add any new events to `ui/shell.js` (playback) and the phase's buttons to `
 - Dice boards (`kind: 'diceBoard'`) can share squares from `config.boards[id]` (with `name`, `maxRolls`, `words` for the ladder/snake/lose banners) and start further up with `start`. They now have a big screen, ui/dice-board.js, styled with `skin.diceTheme` and `skin.diceIcons`.
 - Bots may return `[action, arg]`.
 - New machines must be imported in ui/arcade.js as well as listed in machines/index.js.
+
+
+## Letter trails and feature selectors (added for Supermarket)
+- `trail.keep: true` keeps the trail between games (no Feature Held lamp); `trail.auto: true` starts the top rung's feature as soon as it is reached; `trail.threeNumbersJump: false` stops a number on every reel jumping the trail. Put the letters in `config.trailLetters` for the skin.
+- A `boardStop` segment can be `{ label, feature }`: the lamp picks a feature to play.
+- Loop board square `DOUBLE` doubles the bank.

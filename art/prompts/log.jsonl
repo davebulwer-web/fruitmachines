@@ -95,3 +95,27 @@
 {"file": "ball.png", "size": [32, 32], "description": "white leather football with black pentagon patches, bright white, round", "seed": 21}
 {"file": "sq-free.png", "size": [32, 32], "description": "football resting on grass in front of a small row of three defenders standing shoulder to shoulder", "seed": 22}
 {"note": "2026-11-12 Golden Goal: stadium-bg.png = stadium-bg (seed 51) with a roof sign patched over; ball seed 21, sq-free seed 22, sq-go seed 23 are the kept versions"}
+{"file": "milk.png", "size": [32, 32], "description": "glass milk bottle with silver foil cap, british doorstep milk bottle", "seed": 4}
+{"file": "carrot.png", "size": [32, 32], "description": "bright orange carrot with green leafy top", "seed": 3}
+{"file": "aisle-bg.png", "size": [256, 224], "description": "inside a 1980s british supermarket, long aisle with shelves full of colourful groceries, chequered floor, fluorescent ceiling lights, a shopping trolley, absolutely no writing, no letters, no signs, no labels with text, 1980s arcade pixel art background", "seed": 61}
+{"file": "bread.png", "size": [32, 32], "description": "crusty white bloomer loaf of bread", "seed": 5}
+{"file": "beans.png", "size": [32, 32], "description": "tin can of baked beans with orange label, no letters", "seed": 7}
+{"file": "cheese.png", "size": [32, 32], "description": "wedge of yellow cheese with holes", "seed": 6}
+{"file": "basket.png", "size": [32, 32], "description": "red plastic supermarket shopping basket with handles", "seed": 8}
+{"file": "till.png", "size": [32, 32], "description": "old cash register with drawer, chunky retro shop till, no numbers", "seed": 9}
+{"file": "trolley.png", "size": [32, 32], "description": "shiny golden supermarket shopping trolley, gleaming", "seed": 10}
+{"file": "qm.png", "size": [32, 32], "description": "big glowing yellow question mark on a red price tag, no letters", "seed": 11}
+{"file": "sq-cash.png", "size": [32, 32], "description": "stack of gold coins and a banknote", "seed": 4}
+{"file": "sq-go.png", "size": [32, 32], "description": "green shopping trolley ready to go", "seed": 12}
+{"file": "sq-nudge.png", "size": [32, 32], "description": "fat red arrow pointing down", "seed": 5}
+{"file": "sq-level.png", "size": [32, 32], "description": "golden up arrow with sparkles", "seed": 6}
+{"file": "sq-trip.png", "size": [32, 32], "description": "brown paper shopping bag full of groceries", "seed": 13}
+{"file": "sq-end.png", "size": [32, 32], "description": "red octagon stop sign with a white hand, no letters", "seed": 15}
+{"file": "sq-half.png", "size": [32, 32], "description": "carton of eggs with some cracked eggs", "seed": 14}
+{"file": "sq-double.png", "size": [32, 32], "description": "bright yellow starburst sale sticker, no letters", "seed": 16}
+{"file": "sq-pot.png", "size": [32, 32], "description": "blue plastic loyalty card with a gold star", "seed": 17}
+{"file": "sq-lucky.png", "size": [32, 32], "description": "paper lucky bag with a question mark, tied with ribbon", "seed": 19}
+{"file": "sq-bogof.png", "size": [32, 32], "description": "two identical tins of soup side by side with a plus sign", "seed": 20}
+{"file": "sq-scan.png", "size": [32, 32], "description": "handheld barcode scanner with red laser beam", "seed": 18}
+{"file": "sq-express.png", "size": [32, 32], "description": "small cash register with a lightning bolt", "seed": 21}
+{"note": "2026-11-12 Supermarket: aisle-bg.png = aisle-bg (seed 61) with white lettering on the red shelf signs painted red"}

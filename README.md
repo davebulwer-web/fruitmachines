@@ -85,3 +85,9 @@ Features by place: **Free Kick** and **Free Kick ×2** (steppers: the reels step
 **Cup Run** and **Cup Run Plus** (snakes and ladders up the pitch: through balls jump forward, tackles knock you back, a red card ends it; collect any time; the last square wins £4), **Hat Trick** free spins and the **Trophy** jackpot.
 **Penalty:** any reel win of £1 or more earns a spot kick; shoot left, middle or right and a goal pays the win again.
 Payout: sensible 90.18%, gambler 84.79%, lazy 54.85% (Free Kicks reward timing), a feature every 28 plays.
+
+## Supermarket
+The trail is the name: numbers on the reels light the letters of SUPERMARKET, and they stay lit from game to game (`trail.keep`).
+Fewer numbers on the reels make it a longer build. The 11th letter starts the feature straight away (`trail.auto`): **The Till** spins a lamp round eight features and stops at random:
+Trolley Dash (4, 5 or 8 trips round a loop board with DOUBLE squares that double the bank), Price Check (hi-lo), Lucky Bag (pick), BOGOF (×2 spins), Express Till (win spin) or Loyalty Points (the cash pot).
+Payout: sensible 90.60%, lazy 68.28%, a feature every 24 plays.
