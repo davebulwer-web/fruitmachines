@@ -1,0 +1,16 @@
+{
+  "name": "fruit-machines",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "Retro UK pub fruit machine engine and a series of machines built on it",
+  "scripts": {
+    "sim": "node sim/simulate.js",
+    "values": "node sim/feature-values.js",
+    "test": "node sim/rtp-test.js",
+    "build": "node build.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "0.24.0"
+  }
+}

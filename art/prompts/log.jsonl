@@ -1,0 +1,54 @@
+{"file": "CH.png", "size": [32, 32], "description": "two red cherries on a green stem, fruit machine reel symbol, bold outline", "seed": 0}
+{"file": "SE.png", "size": [32, 32], "description": "a big red number seven", "seed": 0}
+{"file": "LE.png", "size": [32, 32], "description": "a yellow lemon", "seed": 0}
+{"file": "PL.png", "size": [32, 32], "description": "a purple plum with a small stalk", "seed": 0}
+{"file": "OR.png", "size": [32, 32], "description": "a round orange fruit with a green leaf", "seed": 0}
+{"file": "BA.png", "size": [32, 32], "description": "a black rectangular gold bar ingot plate", "seed": 0}
+{"file": "ME.png", "size": [32, 32], "description": "a round green striped watermelon", "seed": 0}
+{"file": "BE.png", "size": [32, 32], "description": "a shiny golden bell", "seed": 0}
+{"file": "DT.png", "size": [32, 32], "description": "a single pub dart with red and blue flights pointing diagonally", "seed": 0}
+{"file": "BE2.png", "size": [32, 32], "description": "a golden bell with a clapper, simple shape, dark outline", "seed": 7}
+{"file": "BA.png", "size": [32, 32], "description": "hand-made in code (text)", "seed": 0}
+{"note": "BE2 (seed 7) chosen as BE.png; first bell rejected for white outline; first BA rejected (looked like a seven)"}
+{"file": "dartboard.png", "size": [128, 128], "description": "a classic pub dartboard seen straight on, black and cream segments, red and green rings, no numbers, centred", "seed": 11}
+{"file": "pub-bg.png", "size": [256, 224], "description": "dark cosy british pub interior at night, wooden panelling, glowing neon signs, chalkboard, moody, empty middle area, 1980s arcade pixel art background", "seed": 21, "usage": {"type": "generations", "generations": 1.0}}
+{"file": "duck.png", "size": [32, 32], "description": "a yellow rubber duck with orange beak, side view", "seed": 3}
+{"file": "wheel.png", "size": [32, 32], "description": "a big fairground ferris wheel with colourful lit gondolas", "seed": 3}
+{"file": "candy.png", "size": [32, 32], "description": "pink candy floss on a paper cone", "seed": 3}
+{"file": "ticket.png", "size": [32, 32], "description": "a red and gold fairground admission ticket, no text", "seed": 3}
+{"file": "icecream.png", "size": [32, 32], "description": "a vanilla ice cream cone with a chocolate flake and strawberry sauce", "seed": 3}
+{"file": "toffee.png", "size": [32, 32], "description": "a shiny red toffee apple on a wooden stick", "seed": 3}
+{"file": "fair-bg.png", "size": [256, 224], "description": "a british travelling funfair at night, big wheel, carousel and helter skelter in the distance, strings of coloured light bulbs, dark purple sky, empty middle area, 1980s arcade pixel art background", "seed": 21}
+{"file": "coconut.png", "size": [32, 32], "description": "a brown hairy coconut", "seed": 3}
+{"file": "goldfish.png", "size": [32, 32], "description": "an orange goldfish in a clear water bag tied at the top", "seed": 3}
+{"file": "toffee2.png", "size": [32, 32], "description": "a toffee apple: a red apple coated in glossy dark red caramel, on a wooden stick pointing up", "seed": 9}
+{"file": "ticket2.png", "size": [32, 32], "description": "a plain red raffle ticket stub with a gold star in the middle and zigzag torn edges, blank, no letters, no numbers", "seed": 9}
+{"file": "wheel2.png", "size": [32, 32], "description": "a simple ferris wheel with eight coloured cars on a white frame and a small stand", "seed": 9}
+{"file": "wheel2.png", "size": [32, 32], "description": "a simple ferris wheel with eight coloured cars on a white frame and a small stand", "seed": 9}
+{"note": "Roll Up funfair set 2026-11-12: toffee2, ticket2, wheel2 (seed 9) chosen over seed 3 versions (plain apple, AI lettering on ticket, messy wheel base); renamed to toffee/ticket/wheel"}
+{"file": "sq-go.png", "size": [32, 32], "description": "a black and white chequered racing start flag on a pole", "seed": 5}
+{"file": "sq-nudge.png", "size": [32, 32], "description": "a big bold yellow arrow pointing straight down", "seed": 5}
+{"file": "sq-cash.png", "size": [32, 32], "description": "a small pile of shiny gold coins", "seed": 5}
+{"file": "sq-half.png", "size": [32, 32], "description": "a pink piggy bank cracked in half with coins falling out", "seed": 5}
+{"file": "sq-token.png", "size": [32, 32], "description": "a round gold fairground token coin with a star stamped in the middle", "seed": 5}
+{"file": "sq-level.png", "size": [32, 32], "description": "a gold star with a green arrow pointing up", "seed": 5}
+{"file": "sq-end.png", "size": [32, 32], "description": "a red octagon stop sign on a short post, blank, no letters", "seed": 5}
+{"file": "sq-duck.png", "size": [32, 32], "description": "a yellow rubber duck hanging from a fishing hook on a line", "seed": 5}
+{"file": "sq-striker.png", "size": [32, 32], "description": "a fairground high striker strength tester tower with a bell on top and a wooden mallet", "seed": 5}
+{"file": "sq-dodgem.png", "size": [32, 32], "description": "a red bumper car dodgem with a tall pole at the back", "seed": 5}
+{"file": "sq-coconut.png", "size": [32, 32], "description": "three brown coconuts sitting on wooden posts at a coconut shy", "seed": 5}
+{"file": "sq-horse.png", "size": [32, 32], "description": "a white carousel horse with a golden pole through it", "seed": 5}
+{"note": "Roll Up board square icons 2026-11-12 (seed 5): sq-go, sq-cash, sq-nudge, sq-level, sq-token, sq-half, sq-end, sq-duck, sq-striker, sq-coconut, sq-dodgem, sq-horse; 'lose a token' and the piggy-bank crack are drawn in code"}
+{"file": "qm-pub-a.png", "size": [32, 32], "description": "a big bold golden yellow question mark symbol on a small round green and red dartboard", "seed": 5}
+{"file": "qm-fair-b.png", "size": [32, 32], "description": "a big glowing yellow question mark sign with light bulbs around it", "seed": 7}
+{"file": "qm-fair-a.png", "size": [32, 32], "description": "a big bold golden yellow question mark symbol inside a round red circus badge", "seed": 5}
+{"file": "qm-pub-b.png", "size": [32, 32], "description": "a big bold white question mark symbol on a round black chalkboard badge with a gold rim", "seed": 7}
+{"file": "qm-plain.png", "size": [32, 32], "description": "a big bold glossy golden question mark symbol", "seed": 3}
+{"note": "2026-11-12 question mark symbols replace the code-drawn QM: oche-cash/art/qm.png = qm-pub-b (chalkboard badge, seed 7), roll-up/art/qm.png = qm-fair-b (light-bulb sign, seed 7), art/symbols/QM.png = qm-plain (seed 3) for future machines"}
+{"file": "arcade-bg.png", "size": [256, 160], "description": "inside a 1980s british seaside amusement arcade at night, rows of glowing fruit machines along both walls, patterned carpet, pink and blue neon signs, no text, 1980s arcade pixel art background", "seed": 13}
+{"file": "arcade-bg2.png", "size": [256, 160], "description": "inside a 1980s seaside amusement arcade at night, rows of glowing slot machine cabinets along both walls, purple tiled floor, pink and blue neon light tubes in star and arrow shapes on the walls, absolutely no writing, no letters, no signs", "seed": 31}
+{"note": "2026-11-12 lobby backdrop art/arcade-bg.png = arcade-bg2 (seed 31, BG=1, 256x160); first try (seed 13) rejected for AI lettering on the signs"}
+{"file": "cab.png", "size": [32, 32], "description": "classic black london taxi cab, front three quarter view, yellow roof light glowing", "seed": 5}
+{"file": "lights.png", "size": [32, 32], "description": "traffic light with red amber and green lamps glowing", "seed": 4}
+{"file": "dice.png", "size": [32, 32], "description": "pair of fuzzy pink dice hanging on a string, car mirror ornament", "seed": 7}
+{"file": "cone.png", "size": [32, 32], "description": "orange and white striped traffic cone", "seed": 3}
