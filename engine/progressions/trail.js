@@ -14,6 +14,10 @@
 //                          trail.gamble = { to: 'next', chance: 0.5 } gambles up one rung at a time;
 //                          { to: 'top', chance: { 4: 0.1, 5: 0.2, ... } } gambles straight for the top
 //                          rung's feature with a chance per rung. Reaching the top takes it.
+//   trail.keep: true   the trail is never lost between spins (a letters trail that builds up over many games);
+//                      there is no Feature Held lamp.
+//   trail.auto: true   reaching featureFrom starts that rung's feature at once instead of offering it.
+//   trail.threeNumbersJump: false   a number on every reel just adds up instead of jumping to featureFrom.
 // Phase 'offer': take, plus play (spinOn) or gamble (gamble).
 
 const trail = {
@@ -21,7 +25,7 @@ const trail = {
 
   beforePlay(m, events) {
     const wasOffer = m.phase === 'offer';
-    if (!wasOffer && m.trail > 0 && !m.held) { m.trail = 0; events.push({ type: 'trailLost' }); }
+    if (!wasOffer && m.trail > 0 && !m.held && !m.config.trail.keep) { m.trail = 0; events.push({ type: 'trailLost' }); }
     m.held = false;
     m.addedThisGame = 0;
     m.trailCounted = false;
@@ -41,7 +45,7 @@ const trail = {
     const all = stops.length;
 
     if (qms === all) set(m, top, events, 'threeQ');
-    else if (nums.every(n => n > 0)) set(m, Math.max(cfg.trail.featureFrom, Math.min(top, m.trail + sum)), events, 'threeNumbers');
+    else if (nums.every(n => n > 0) && cfg.trail.threeNumbersJump !== false) set(m, Math.max(cfg.trail.featureFrom, Math.min(top, m.trail + sum)), events, 'threeNumbers');
     else if (sum > 0) set(m, Math.min(top, m.trail + sum), events, 'numbers');
     if (qms > 0 && qms < all) question(m, sum, events);
   },
@@ -49,6 +53,11 @@ const trail = {
   // Offer a feature, or decide whether the trail is held. Returns true if it set the phase.
   settle(m, events) {
     const cfg = m.config, rng = m.rng;
+    if (m.trail >= cfg.trail.featureFrom && cfg.trail.auto) {           // straight into the feature
+      trail.phases.offer.actions.take(m, null, events);
+      return true;
+    }
+    if (cfg.trail.keep) return false;                                  // a kept trail has no Feature Held lamp
     if (m.trail >= cfg.trail.featureFrom) {
       if (m.wasOffer && m.addedThisGame === 0 && !m.held) {
         m.trail = 0; events.push({ type: 'trailLost' }); m.phase = 'idle'; return true;

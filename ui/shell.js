@@ -551,7 +551,7 @@ export function startMachine(config, skin, { canvas = document.getElementById('s
       }
       case 'board':
         message = e.segment.pays ? `HIT ${e.segment.label}` : `${e.segment.label}!`;
-        if (!e.segment.pays) sound.lose();
+        if (e.segment.feature) sound.fanfare(); else if (!e.segment.pays) sound.lose();
         await wait(500);
         break;
       case 'freeSpins': message = e.multiplier > 1 ? `${e.spins} SPINS AT X${e.multiplier}` : `${e.spins} FREE SPINS${e.holds ? ' WITH HOLDS' : ''}`; await wait(400); break;
@@ -617,7 +617,7 @@ export function startMachine(config, skin, { canvas = document.getElementById('s
         const words = {
           cash: `+${money(sq.cash)}`, feature: (f?.name || '').toUpperCase(), nudges: `+${sq.count} NUDGES`,
           shots: `+${sq.count} ${sq.count === 1 ? L.shotName : L.shotName + 'S'}`, level: e.level > before.level ? 'LEVEL UP!' : 'TOP LEVEL',
-          half: 'BANK HALVED', miss: `LOSE A ${L.shotName}`, end: 'END!', bust: 'BUST!', go: 'GO', taxi: 'TAXI!',
+          half: 'BANK HALVED', miss: `LOSE A ${L.shotName}`, end: 'END!', bust: 'BUST!', go: 'GO', taxi: 'TAXI!', double: 'BANK DOUBLED!', pot: 'CASH POT!',
         }[sq.type];
         if (words) say(words, 900);
         if (['half', 'miss', 'end', 'bust'].includes(sq.type)) sound.lose(); else if (sq.type !== 'go') sound.award();

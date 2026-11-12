@@ -37,12 +37,13 @@ function squareText(s, g, shot) {
     case 'bust': return ['BUST', ''];
     case 'taxi': return ['TAXI', ''];
     case 'pot': return ['CASH', 'POT'];
+    case 'double': return ['DOUBLE', 'BANK'];
   }
   return ['', ''];
 }
 
 function squareFill(s, T) {
-  return { go: T.go, cash: T.cash, feature: T.feature, nudges: T.nudges, shots: T.shots, level: T.level, half: T.risk, miss: T.risk, end: T.risk, bust: T.risk, taxi: T.taxi, pot: T.pot }[s.type] || T.edge;
+  return { go: T.go, cash: T.cash, feature: T.feature, nudges: T.nudges, shots: T.shots, level: T.level, half: T.risk, miss: T.risk, end: T.risk, bust: T.risk, taxi: T.taxi, pot: T.pot, double: T.double || T.level }[s.type] || T.edge;
 }
 
 function drawDie(g, x, y, size, face, lit) {

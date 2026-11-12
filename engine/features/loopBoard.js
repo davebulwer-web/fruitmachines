@@ -12,7 +12,7 @@
 // Square tokens: GO start; a number = cash in pence; F:id feature; Nn nudges to the bank;
 //   Sn extra shots; UP level up; MISS lose a shot; HALF halve the bank; END end the board; BUST lose the bank and end;
 //   TAXI a lamp races round the board and the player stops it (skill stop) to ride to that square;
-//   POT wins the machine's cash pot (config.cashPot) into the bank.
+//   POT wins the machine's cash pot (config.cashPot) into the bank; DOUBLE doubles the bank.
 // The ring is laid out clockwise from the top left on a cols x rows grid: squares = 2 x (cols + rows) - 4.
 // Phase 'loop': actions roll, collect.
 
@@ -32,6 +32,7 @@ export function parseLoop(spec) {
     if (t === 'BUST') return { type: 'bust' };
     if (t === 'TAXI') return { type: 'taxi' };
     if (t === 'POT') return { type: 'pot' };
+    if (t === 'DOUBLE') return { type: 'double' };
     throw new Error(`loop board: bad square "${t}"`);
   });
 }
@@ -71,6 +72,7 @@ function landOn(m, events) {
     case 'end': end = 'end'; break;
     case 'bust': L.bank = 0; end = 'bust'; break;
     case 'pot': L.bank += m.takeCashPot(events); break;
+    case 'double': L.bank *= 2; break;
   }
   events.push({ type: 'loopLand', pos: L.pos, square: s, bank: L.bank, shots: L.shots, level: L.level, nudges: L.nudges, awards: [...L.awards] });
   if (end) return finish(m, events, end);
@@ -95,7 +97,7 @@ const taxi = {
   // simulator: where a good player would aim
   aim(m, ctx) {
     const L = m.loop, b = boardOf(m.config, m.config.features[L.feature]);
-    const worth = s => ({ cash: s.cash, feature: 120, pot: m.cashPot, level: 80, shots: 40 * s.count, nudges: 20 * s.count, go: 0, taxi: 0, half: -L.bank / 2, miss: -40, end: -200, bust: -300 }[s.type] ?? 0);
+    const worth = s => ({ cash: s.cash, feature: 120, pot: m.cashPot, double: L.bank, level: 80, shots: 40 * s.count, nudges: 20 * s.count, go: 0, taxi: 0, half: -L.bank / 2, miss: -40, end: -200, bust: -300 }[s.type] ?? 0);
     return b._squares.reduce((bi, s, i, a) => (worth(s) > worth(a[bi]) ? i : bi), 0);
   },
 };
