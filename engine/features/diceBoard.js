@@ -8,6 +8,8 @@
 //   squares: 'GO:20 30 L7 40 LOSE 50 S2 60 F:superHolds ... 400',   // or an array of square objects
 //   die: [{ value: 1, weight: 1 }, ...],    // optional, a fair 1-6 by default
 //   maxRolls: 8,                            // optional, auto-collect after this many rolls
+//   start: 0,                               // optional, the square you start on (a better start for higher trail steps)
+//   board: 'id',                            // optional, share squares from config.boards[id] (with name, words)
 // }
 // Square tokens: number = cash prize in pence; GO:n = start square worth n; Ln / Sn = ladder / snake
 // to square n; LOSE; F:id = feature square. Parsed to { type: 'cash'|'go'|'ladder'|'snake'|'lose'|'feature', ... }.
@@ -27,7 +29,8 @@ export function parseSquares(spec) {
   });
 }
 
-const board = (m, f) => (f._squares ||= parseSquares(f.squares));
+const spec = (m, f) => (typeof f.board === 'string' ? m.config.boards[f.board] : f);
+const board = (m, f) => { const b = spec(m, f); return (b._squares ||= parseSquares(b.squares)); };
 
 function collect(m, arg, events) {
   const d = m.dice, f = m.config.features[d.feature];
@@ -41,11 +44,11 @@ function collect(m, arg, events) {
 export default {
   init(m) { m.dice = null; },
   start(m, f, id, events) {
-    const sq = board(m, f);
-    const go = sq[0].cash || 0;
-    m.dice = { feature: id, pos: 0, prize: go, prizeFeature: null, rolls: 0 };
+    const sq = board(m, f), b = spec(m, f), pos = f.start ?? 0, here = sq[pos];
+    const prize = here.cash || sq[0].cash || 0;
+    m.dice = { feature: id, pos, prize, prizeFeature: here.type === 'feature' ? here.feature : null, rolls: 0 };
     m.phase = 'dice';
-    events.push({ type: 'diceStart', feature: id, squares: sq, pos: 0, prize: go });
+    events.push({ type: 'diceStart', feature: id, title: b.name, words: b.words, squares: sq, pos, prize, maxRolls: f.maxRolls ?? b.maxRolls ?? null });
   },
   phases: {
     dice: {
@@ -54,11 +57,11 @@ export default {
         collect,
         roll(m, arg, events) {
           const d = m.dice, f = m.config.features[d.feature], sq = board(m, f), last = sq.length - 1;
-          const roll = f.die ? m.rng.weighted(f.die) : 1 + m.rng.int(6);
+          const roll = (f.die || spec(m, f).die) ? m.rng.weighted(f.die || spec(m, f).die) : 1 + m.rng.int(6);
           const from = d.pos;
           d.pos = Math.min(last, d.pos + roll);
           d.rolls++;
-          events.push({ type: 'diceRoll', roll, from, to: d.pos });
+          events.push({ type: 'diceRoll', roll, from, to: d.pos, rolls: d.rolls });
           let s = sq[d.pos];
           if (s.type === 'ladder' || s.type === 'snake') {
             events.push({ type: 'diceSlide', kind: s.type, from: d.pos, to: s.to });
@@ -74,7 +77,8 @@ export default {
           if (s.type === 'cash' || s.type === 'go') { d.prize = s.cash; d.prizeFeature = null; }
           if (s.type === 'feature') d.prizeFeature = s.feature;
           events.push({ type: 'diceLand', pos: d.pos, prize: d.prize, feature: d.prizeFeature });
-          if (d.pos === last || (f.maxRolls && d.rolls >= f.maxRolls)) collect(m, arg, events);
+          const max = f.maxRolls ?? spec(m, f).maxRolls;
+          if (d.pos === last || (max && d.rolls >= max)) collect(m, arg, events);
         },
       },
       // simulator: take a feature square, otherwise roll until the prize reaches p.diceCollectAt (pence)

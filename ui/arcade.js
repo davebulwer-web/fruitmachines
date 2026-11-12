@@ -6,6 +6,8 @@ import rollUp from '../machines/roll-up/config.js';
 import rollUpSkin from '../machines/roll-up/skin.js';
 import nightCab from '../machines/night-cab/config.js';
 import nightCabSkin from '../machines/night-cab/skin.js';
+import goldenGoal from '../machines/golden-goal/config.js';
+import goldenGoalSkin from '../machines/golden-goal/skin.js';
 import { startMachine } from './shell.js';
 import { money } from './font.js';
 
@@ -13,6 +15,7 @@ const MACHINES = [
   { config: ocheCash, skin: ocheCashSkin },
   { config: rollUp, skin: rollUpSkin },
   { config: nightCab, skin: nightCabSkin },
+  { config: goldenGoal, skin: goldenGoalSkin },
 ];
 
 const lobby = document.getElementById('lobby');

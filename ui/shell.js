@@ -27,6 +27,7 @@ import { drawText, money } from './font.js';
 import { placeholderSymbols } from './placeholder-art.js';
 import { sound } from './sound.js';
 import { drawLoopBoard } from './loop-board.js';
+import { drawDiceBoard } from './dice-board.js';
 import { drawSegments, scrollWindow } from './segments.js';
 
 export const W = 270, H = 480, SYM = 32;
@@ -72,7 +73,7 @@ export function startMachine(config, skin, { canvas = document.getElementById('s
 
   // ---------- state ----------
   const shown = machine.positions.map(p => p);
-  const disp = { credit: machine.credit, trail: 0, held: false, lamp: null, ladderFlash: null, ringFlash: null, banner: null, dice: null, loop: null, hilo: null, pick: null, cashPot: machine.cashPot, potFlash: false, repeat: null };
+  const disp = { credit: machine.credit, trail: 0, held: false, lamp: null, ladderFlash: null, ringFlash: null, banner: null, dice: null, loop: null, hilo: null, pick: null, penalty: null, cashPot: machine.cashPot, potFlash: false, repeat: null };
   let held = config.reels.map(() => false);
   let busy = false, message = 'PRESS START', winFlash = 0, frame = 0, lastInput = performance.now();
   let pendingRandomStop = false, running = true, shownMessage = '', messageSince = 0;
@@ -238,7 +239,8 @@ export function startMachine(config, skin, { canvas = document.getElementById('s
           ? { collect: ['TAKE', 'take'], gamble: ['GAMBLE', 'gamble'] }
           : { reel: holds, collect: ['TAKE', 'take'], start: ['SPIN ON', 'play'] };
       case 'ladder': return { collect: ['COLLECT', 'collect'], gamble: ['GAMBLE', 'gamble'] };
-      case 'stop': return disp.lamp?.skill ? { gamble: ['STOP', 'stop'], start: ['STOP', 'stop'] } : {};
+      case 'stop': { const b = disp.lamp?.button || 'STOP'; return disp.lamp?.skill ? { gamble: [b, 'stop'], start: [b, 'stop'] } : {}; }
+      case 'penalty': return { collect: ['LEFT', 'shoot', 0], gamble: ['MIDDLE', 'shoot', 1], start: ['RIGHT', 'shoot', 2] };
       case 'free': return { reel: m.holdsOffered ? 'hold' : undefined, start: ['START', 'play'] };
       case 'loop': return { collect: ['COLLECT', 'collect'], gamble: ['ROLL', 'roll'], start: ['ROLL', 'roll'] };
       case 'hilo': return { collect: ['COLLECT', 'collect'], gamble: ['LO', 'lo'], start: ['HI', 'hi'] };
@@ -257,7 +259,8 @@ export function startMachine(config, skin, { canvas = document.getElementById('s
       case 'nudge': return `NUDGE: ${m.nudges} LEFT`;
       case 'ladder': return 'COLLECT OR GAMBLE';
       case 'offer': return `${FEATURE_NAMES[config.trail.rungs[m.trail]]}: ${config.trail.offer === 'gamble' ? 'TAKE OR GAMBLE' : 'TAKE OR SPIN ON'}`;
-      case 'stop': return disp.lamp?.kind === 'loop' ? 'TAXI: PRESS STOP' : disp.lamp?.skill ? 'PRESS STOP!' : FEATURE_NAMES[disp.lamp?.feature] || 'GOOD LUCK';
+      case 'penalty': return 'PICK YOUR CORNER';
+      case 'stop': return disp.lamp?.kind === 'stepper' ? `${(disp.lamp.button || 'STOP')} ON A WIN` : disp.lamp?.kind === 'loop' ? 'TAXI: PRESS STOP' : disp.lamp?.skill ? 'PRESS STOP!' : FEATURE_NAMES[disp.lamp?.feature] || 'GOOD LUCK';
       case 'free': return `FREE SPIN: ${m.freeSpins} LEFT`;
       case 'streak': return `${FEATURE_NAMES[m.streakFeature]}: PRESS START`;
       case 'loop': { const w = disp.loop?.shotName || 'SHOT'; return `${m.loop.shots} ${m.loop.shots === 1 ? w : w + 'S'} LEFT: ROLL`; }
@@ -289,6 +292,39 @@ export function startMachine(config, skin, { canvas = document.getElementById('s
       text(money(v), P.x + 8 + i * bw + (bw - 2) / 2 + 1, P.y + 107, on ? '#200808' : C.ink, { align: 'center' });
     });
     text('START: HI   GAMBLE: LO', W / 2 + 1, P.y + 132, C.dim, { align: 'center' });
+  }
+
+  // Penalty: a goal with a keeper; the ball flies to the chosen side and the keeper dives.
+  function drawPenalty() {
+    const P = disp.penalty, x = 12, y = 30, w = W - 24, h = 196;
+    for (let k = 0; k < 7; k++) rect(x, y + k * 28, w, 28, k % 2 ? '#2a7a32' : '#33883a');
+    ctx.strokeStyle = '#000'; ctx.lineWidth = 1; ctx.strokeRect(x + 0.5, y + 0.5, w - 1, h - 1);
+    text(`SCORE TO WIN ${money(P.amount)} AGAIN`, W / 2 + 1, y + 6, '#fff', { align: 'center' });
+    // the goal and net
+    const gx = x + 25, gy = y + 26, gw = w - 50, gh = 80;
+    rect(gx, gy, gw, gh, '#1a4a22');
+    ctx.strokeStyle = '#ffffff40';
+    for (let k = 6; k < gw; k += 8) { ctx.beginPath(); ctx.moveTo(gx + k + 0.5, gy); ctx.lineTo(gx + k + 0.5, gy + gh); ctx.stroke(); }
+    for (let k = 6; k < gh; k += 8) { ctx.beginPath(); ctx.moveTo(gx, gy + k + 0.5); ctx.lineTo(gx + gw, gy + k + 0.5); ctx.stroke(); }
+    rect(gx - 4, gy - 4, gw + 8, 4, '#f4f4f4'); rect(gx - 4, gy, 4, gh, '#f4f4f4'); rect(gx + gw, gy, 4, gh, '#f4f4f4');
+    rect(x + 4, gy + gh, w - 8, 2, '#e8f0e8');
+    const side = d => gx + gw * [0.18, 0.5, 0.82][d];
+    // keeper: dives towards his side as the ball flies
+    const kp = images.keeper, t = P.dir === null ? 0 : P.t;
+    const kx = P.dive === null ? W / 2 : W / 2 + (side(P.dive) - W / 2) * t;
+    const sway = P.dir === null ? Math.sin(frame / 10) * 6 : 0;
+    if (kp) ctx.drawImage(kp, Math.round(kx + sway - 24), gy + gh - 52, 48, 48);
+    else rect(Math.round(kx + sway - 8), gy + gh - 40, 16, 40, '#e0c020');
+    // the ball from the spot
+    const bx0 = W / 2, by0 = y + h - 34, tx = P.dir === null ? bx0 : side(P.dir), ty = gy + 30;
+    const bx = bx0 + (tx - bx0) * t, by = by0 + (ty - by0) * t - Math.sin(t * Math.PI) * 20, br = Math.round(7 - 3 * t);
+    const ball = images.ball;
+    if (ball) ctx.drawImage(ball, Math.round(bx - br * 1.4), Math.round(by - br * 1.4), Math.round(br * 2.8), Math.round(br * 2.8));
+    else { disc(Math.round(bx), Math.round(by), br + 1, '#000'); disc(Math.round(bx), Math.round(by), br, '#fff'); }
+    if (P.dir === null) {
+      ['LEFT', 'MIDDLE', 'RIGHT'].forEach((l, d) => text(l, side(d) + 1, gy + gh + 8, blink(12) ? '#fff' : '#cfe8cf', { align: 'center' }));
+    }
+    if (P.goal !== null) bannerBox(W / 2, gy + gh / 2, P.goal ? 'GOAL!' : 'SAVED!', P.goal ? C.gold : C.red);
   }
 
   function drawPick() {
@@ -371,14 +407,22 @@ export function startMachine(config, skin, { canvas = document.getElementById('s
         lamp.speed = Math.max(0.04, lamp.speed * 0.955);
         if (lamp.speed <= 0.05 && Math.round(lamp.pos) % lamp.n === lamp.target) lamp.done = true;
       }
+      if (lamp.kind === 'stepper') {                                  // steppers: the reels follow the lamp
+        const k = Math.round(lamp.pos) % lamp.n;
+        lamp.seq[k].forEach((p, i) => (shown[i] = p));
+        if (lamp.wins[k] > 0) winFlash = Math.max(winFlash, 2);
+        if (k !== lamp.lastStep) { lamp.lastStep = k; sound.nudge(); }
+      }
     }
     rect(0, 0, W, H, C.cabinet);
     frameBox(3, 3, W - 6, 229, C.glass, C.cabinetEdge);
     skin.drawTop(g);
     if (disp.hilo) drawHiLo();
     if (disp.pick) drawPick();
+    if (disp.penalty) drawPenalty();
     drawBottomGlass();
     if (disp.loop) (skin.drawLoop || drawLoopBoard)(g, skin.loopTheme, skin.loopIcons);
+    if (disp.dice) (skin.drawDice || drawDiceBoard)(g, skin.diceTheme, skin.diceIcons);
     drawParty();
     requestAnimationFrame(render);
   }
@@ -481,9 +525,11 @@ export function startMachine(config, skin, { canvas = document.getElementById('s
       case 'gambleWon': sound.fanfare(); break;
       case 'gambleLost': message = 'BUST'; sound.lose(); await wait(600); break;
       case 'stopStart': {
-        const taxi = e.kind === 'loop';                              // a taxi ride round the loop board
-        disp.lamp = { kind: e.kind, n: e.segments, pos: taxi ? disp.loop.pos : 0, board: e.board, skill: e.skill, feature: e.feature, speed: taxi ? 0.1 : e.skill ? 0.22 : 0.3, stopping: false };
-        message = taxi ? 'TAXI: PRESS STOP' : e.skill ? 'PRESS STOP!' : FEATURE_NAMES[e.feature] || 'GOOD LUCK';
+        const taxi = e.kind === 'loop', step = e.kind === 'stepper';   // a taxi ride round the loop board, or steppers
+        disp.lamp = { kind: e.kind, n: e.segments, pos: taxi ? disp.loop.pos : 0, board: e.board, skill: e.skill, feature: e.feature,
+          speed: step ? 0.03 : taxi ? 0.1 : e.skill ? 0.22 : 0.3, stopping: false, seq: e.seq, wins: e.wins, button: e.button };
+        if (step) { say(FEATURE_NAMES[e.feature], 1200); sound.fanfare(); }
+        message = phaseMessage(machine) ?? 'PRESS STOP!';
         if (!e.skill) pendingRandomStop = true;
         break;
       }
@@ -532,6 +578,24 @@ export function startMachine(config, skin, { canvas = document.getElementById('s
         for (let i = 0; i < 9; i++) { L.face = 1 + Math.floor(Math.random() * 6); await wait(60 + i * 12); }
         L.face = e.roll; sound.stop(); await wait(250);
         for (let k = 1; k <= e.steps; k++) { L.pos = (e.from + k) % n; sound.lamp(); await wait(150); }
+        break;
+      }
+      case 'stepperStop':
+        e.positions.forEach((p, i) => (shown[i] = p));
+        if (!e.win) { message = 'MISSED'; sound.lose(); await wait(600); }
+        break;
+      case 'penaltyStart':
+        disp.penalty = { feature: e.feature, amount: e.amount, dir: null, dive: null, goal: null, t: 0 };
+        say(FEATURE_NAMES[e.feature] || 'PENALTY', 1200); sound.fanfare(); await wait(900);
+        break;
+      case 'penalty': {
+        const P = disp.penalty;
+        Object.assign(P, { dir: e.dir, dive: e.dive, goal: null }); sound.gamble();
+        await anim(800, t => (P.t = t));
+        P.goal = e.goal;
+        if (e.goal) { say('GOAL!', 1200); sound.fanfare(); } else { say('SAVED!', 1200); sound.lose(); message = 'SAVED'; }
+        await wait(1300);
+        disp.penalty = null;
         break;
       }
       case 'loopTaxi': if (disp.loop) disp.loop.pos = e.to; break;
@@ -592,7 +656,7 @@ export function startMachine(config, skin, { canvas = document.getElementById('s
         break;
       // dice board
       case 'diceStart':
-        disp.dice = { squares: e.squares, pos: 0, prize: e.prize, feature: null, face: null, rolling: false };
+        disp.dice = { title: e.title, words: e.words, squares: e.squares, pos: e.pos, prize: e.prize, feature: null, face: null, rolling: false, rolls: 0, maxRolls: e.maxRolls };
         say(FEATURE_NAMES[e.feature], 1500); sound.fanfare(); await wait(1000);
         break;
       case 'diceRoll': {
@@ -601,12 +665,13 @@ export function startMachine(config, skin, { canvas = document.getElementById('s
         for (let i = 0; i < 9; i++) { d.face = 1 + Math.floor(Math.random() * 6); await wait(70 + i * 12); }
         d.face = e.roll; d.rolling = false; sound.stop();
         await wait(300);
+        d.rolls = e.rolls;
         for (let p = e.from + 1; p <= e.to; p++) { d.pos = p; sound.lamp(); await wait(170); }
         break;
       }
       case 'diceSlide': {
         const d = disp.dice;
-        say(e.kind === 'ladder' ? 'LADDER!' : 'SNAKE!', 1000);
+        say(disp.dice.words?.[e.kind] || (e.kind === 'ladder' ? 'LADDER!' : 'SNAKE!'), 1000);
         e.kind === 'ladder' ? sound.fanfare() : sound.lose();
         await wait(500);
         const from = d.pos;
@@ -615,7 +680,7 @@ export function startMachine(config, skin, { canvas = document.getElementById('s
         break;
       }
       case 'diceLand': disp.dice.prize = e.prize; disp.dice.feature = e.feature; await wait(200); break;
-      case 'diceLose': say('LOSE!', 1200); sound.lose(); await wait(1200); disp.dice = null; message = 'BAD LUCK'; break;
+      case 'diceLose': say(disp.dice.words?.lose || 'LOSE!', 1200); sound.lose(); await wait(1200); disp.dice = null; message = 'BAD LUCK'; break;
       case 'diceCollect': await wait(300); disp.dice = null; break;
     }
   }
@@ -658,7 +723,7 @@ export function startMachine(config, skin, { canvas = document.getElementById('s
     }
     const c = ctl[name];
     if (!c) return;
-    const [, action] = c;
+    const [, action, arg] = c;
     if (action === 'play') {
       if (!m.canPlay()) {
         if (m.credit < config.stake) { m.credit += config.startCredit; disp.credit = m.credit; message = 'PRESS START'; sound.award(); }
@@ -675,7 +740,7 @@ export function startMachine(config, skin, { canvas = document.getElementById('s
       busy = true; disp.ladderFlash = m.ladderStep; sound.gamble();
       return wait(1100).then(() => { disp.ladderFlash = null; busy = false; return act(() => m.act('gamble')); });
     }
-    return act(() => m.act(action));
+    return act(() => m.act(action, arg));
   }
 
   const hit = (b, x, y) => x >= b.x && x < b.x + b.w && y >= b.y && y < b.y + b.h;

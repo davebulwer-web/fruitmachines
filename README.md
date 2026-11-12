@@ -78,3 +78,10 @@ The City Round is a looping board with two new squares: **TAXI** (a lamp races r
 The **Cash Pot** is a fare meter on the top glass that starts at 20p and may tick up 10p after a losing play, to £4; a ? can also award it, and so can Lost Property.
 **Repeat chance:** any reel win of £1.50 or more lights REPEAT and may pay again.
 Payout: sensible 91.05%, gambler 84.52%, lazy 69.70%, a feature every 24 plays.
+
+## Golden Goal
+Pub football machine. A 10-place league table trail: from place 5 a feature is offered, take it or gamble up a place at evens.
+Features by place: **Free Kick** and **Free Kick ×2** (steppers: the reels step up and down, press SHOOT while a win shows),
+**Cup Run** and **Cup Run Plus** (snakes and ladders up the pitch: through balls jump forward, tackles knock you back, a red card ends it; collect any time; the last square wins £4), **Hat Trick** free spins and the **Trophy** jackpot.
+**Penalty:** any reel win of £1 or more earns a spot kick; shoot left, middle or right and a goal pays the win again.
+Payout: sensible 90.18%, gambler 84.79%, lazy 54.85% (Free Kicks reward timing), a feature every 28 plays.
