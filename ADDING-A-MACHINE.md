@@ -107,3 +107,10 @@ Then add any new events to `ui/shell.js` (playback) and the phase's buttons to `
 - `trail.keep: true` keeps the trail between games (no Feature Held lamp); `trail.auto: true` starts the top rung's feature as soon as it is reached; `trail.threeNumbersJump: false` stops a number on every reel jumping the trail. Put the letters in `config.trailLetters` for the skin.
 - A `boardStop` segment can be `{ label, feature }`: the lamp picks a feature to play.
 - Loop board square `DOUBLE` doubles the bank.
+
+
+## Bonus symbols instead of a trail (added for Thrill Park)
+- `progression: { type: 'scatter' }` with `scatter: { symbol: 'BN', min: 3, rungs: { 3: id, 4: id, 5: id } }`: the bonus symbol is counted in all nine visible squares after the spin and nudges; `min` or more start the rung's feature straight away. The screen's meter shows BONUS n/min. The machine needs a `sym_BN` picture.
+- `{ kind: 'series', feature, times }` plays a feature several times in a row.
+- A skill `boardStop` aims (in the simulator) for the segment with the biggest `pays`, or `worth` for a feature segment.
+- The lobby only shows its "coming soon" cabinet when the machines don't fill a row of three.

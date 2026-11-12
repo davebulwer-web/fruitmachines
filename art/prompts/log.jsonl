@@ -119,3 +119,25 @@
 {"file": "sq-scan.png", "size": [32, 32], "description": "handheld barcode scanner with red laser beam", "seed": 18}
 {"file": "sq-express.png", "size": [32, 32], "description": "small cash register with a lightning bolt", "seed": 21}
 {"note": "2026-11-12 Supermarket: aisle-bg.png = aisle-bg (seed 61) with white lettering on the red shelf signs painted red"}
+{"file": "balloon.png", "size": [32, 32], "description": "shiny red helium balloon on a string", "seed": 3}
+{"file": "hotdog.png", "size": [32, 32], "description": "hot dog in a bun with mustard", "seed": 4}
+{"file": "popcorn.png", "size": [32, 32], "description": "red and white striped box of popcorn overflowing", "seed": 5}
+{"file": "soda.png", "size": [32, 32], "description": "paper soda cup with lid and bendy straw", "seed": 6}
+{"file": "park-bg.png", "size": [256, 224], "description": "theme park at sunset, big rollercoaster with loops, fairytale castle, ferris wheel in the distance, palm trees, pink and orange sky, absolutely no writing, no letters, no signs, 1980s arcade pixel art background", "seed": 71}
+{"file": "map.png", "size": [32, 32], "description": "folded colourful theme park map, no letters", "seed": 7}
+{"file": "mascot.png", "size": [32, 32], "description": "friendly brown bear theme park mascot waving", "seed": 8}
+{"file": "coastercar.png", "size": [32, 32], "description": "red rollercoaster car with yellow trim, front view", "seed": 9}
+{"file": "castle.png", "size": [32, 32], "description": "fairytale castle with pink and blue towers and flags", "seed": 10}
+{"file": "ticket.png", "size": [32, 32], "description": "shiny golden ride ticket with a star, glowing, no letters", "seed": 11}
+{"file": "r-coaster.png", "size": [32, 32], "description": "rollercoaster loop track with a car", "seed": 12}
+{"file": "r-teacups.png", "size": [32, 32], "description": "spinning teacup ride, pastel teacups", "seed": 13}
+{"file": "r-flume.png", "size": [32, 32], "description": "log flume boat splashing down a water chute", "seed": 14}
+{"file": "r-ship.png", "size": [32, 32], "description": "swinging pirate ship ride with a black flag", "seed": 16}
+{"file": "r-tower.png", "size": [32, 32], "description": "tall drop tower ride with seats at the top", "seed": 17}
+{"file": "r-ghost.png", "size": [32, 32], "description": "ghost train carriage with a cartoon ghost", "seed": 15}
+{"file": "r-carousel.png", "size": [32, 32], "description": "carousel merry go round with horses and striped canopy", "seed": 18}
+{"file": "r-splash.png", "size": [32, 32], "description": "big water splash wave with droplets", "seed": 19}
+{"file": "ticket.png", "size": [32, 32], "description": "golden admission ticket stub with perforated edge and a red star, rectangular paper ticket, glowing gold", "seed": 31}
+{"file": "r-coaster.png", "size": [32, 32], "description": "small rollercoaster train going over a steep hill on a red track", "seed": 32}
+{"file": "coastercar.png", "size": [32, 32], "description": "single red rollercoaster cart with yellow safety lap bar, side view, on a short piece of track", "seed": 33}
+{"note": "2026-11-12 Thrill Park: ticket seed 31, r-coaster seed 32, coastercar seed 33 are the kept versions (first ticket came out as a plain star)"}

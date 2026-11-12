@@ -91,3 +91,9 @@ The trail is the name: numbers on the reels light the letters of SUPERMARKET, an
 Fewer numbers on the reels make it a longer build. The 11th letter starts the feature straight away (`trail.auto`): **The Till** spins a lamp round eight features and stops at random:
 Trolley Dash (4, 5 or 8 trips round a loop board with DOUBLE squares that double the bank), Price Check (hi-lo), Lucky Bag (pick), BOGOF (×2 spins), Express Till (win spin) or Loyalty Points (the cash pot).
 Payout: sensible 90.60%, lazy 68.28%, a feature every 24 plays.
+
+## Thrill Park
+Theme park machine, and the first without a trail: some reel stops are a golden **ride ticket** bonus symbol (`progression: { type: 'scatter' }`).
+Three tickets anywhere in the nine visible squares start the feature straight away; four give two rides and five give three (`kind: 'series'`).
+Each ride is a spin of the **Ride Wheel**, a skill stop round eight rides: Rollercoaster (cash ladder), Teacups (80p), Log Flume (win spin), Ghost Train (pick), Pirate Ship (£1.40), Drop Tower (hi-lo), Carousel (free spins with holds) and Water Splash (steppers).
+Payout: sensible 90.40%, lazy 58.58% (the Ride Wheel rewards a good stop), a feature every 26 plays.
