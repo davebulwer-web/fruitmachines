@@ -71,3 +71,10 @@ Each machine's lobby screenshot lives in `machines/<id>/preview.png`. After chan
 
 ## Big wins
 Any win of a quarter of the jackpot or more gets a short BIG WIN show; a jackpot win gets about five seconds of chasing cabinet lights, falling coins, a flashing JACKPOT sign and a tune (ui/shell.js `startParty`/`drawParty`, `sound.jackpot`). It is shared, so every machine gets it.
+
+## Night Cab
+Late-night taxi machine. An 8-stop cab route: from stop 5 the City Round board is offered (take it, or spin on for more fares).
+The City Round is a looping board with two new squares: **TAXI** (a lamp races round the board and you press STOP to ride to the square you want) and **POT** (wins the Cash Pot).
+The **Cash Pot** is a fare meter on the top glass that starts at 20p and may tick up 10p after a losing play, to £4; a ? can also award it, and so can Lost Property.
+**Repeat chance:** any reel win of £1.50 or more lights REPEAT and may pay again.
+Payout: sensible 91.05%, gambler 84.52%, lazy 69.70%, a feature every 24 plays.

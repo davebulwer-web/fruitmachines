@@ -4,12 +4,15 @@ import ocheCash from '../machines/oche-cash/config.js';
 import ocheCashSkin from '../machines/oche-cash/skin.js';
 import rollUp from '../machines/roll-up/config.js';
 import rollUpSkin from '../machines/roll-up/skin.js';
+import nightCab from '../machines/night-cab/config.js';
+import nightCabSkin from '../machines/night-cab/skin.js';
 import { startMachine } from './shell.js';
 import { money } from './font.js';
 
 const MACHINES = [
   { config: ocheCash, skin: ocheCashSkin },
   { config: rollUp, skin: rollUpSkin },
+  { config: nightCab, skin: nightCabSkin },
 ];
 
 const lobby = document.getElementById('lobby');

@@ -72,7 +72,7 @@ export function startMachine(config, skin, { canvas = document.getElementById('s
 
   // ---------- state ----------
   const shown = machine.positions.map(p => p);
-  const disp = { credit: machine.credit, trail: 0, held: false, lamp: null, ladderFlash: null, ringFlash: null, banner: null, dice: null, loop: null, hilo: null, pick: null };
+  const disp = { credit: machine.credit, trail: 0, held: false, lamp: null, ladderFlash: null, ringFlash: null, banner: null, dice: null, loop: null, hilo: null, pick: null, cashPot: machine.cashPot, potFlash: false, repeat: null };
   let held = config.reels.map(() => false);
   let busy = false, message = 'PRESS START', winFlash = 0, frame = 0, lastInput = performance.now();
   let pendingRandomStop = false, running = true, shownMessage = '', messageSince = 0;
@@ -156,6 +156,7 @@ export function startMachine(config, skin, { canvas = document.getElementById('s
     if (g.idle && message === 'PRESS START') {
       const info = [config.name, `${money(config.stake)} PER PLAY`, `CREDIT ${money(disp.credit)}`, `JACKPOT ${money(config.jackpot)}`];
       if (machine.nudgeBank) info.push(`${machine.nudgeBank} NUDGES BANKED`);
+      if (config.cashPot) info.push(`CASH POT ${money(disp.cashPot)}`);
       msg = info[Math.floor(now / 2200) % info.length];
     }
     if (msg !== shownMessage) { shownMessage = msg; messageSince = now; }
@@ -256,7 +257,7 @@ export function startMachine(config, skin, { canvas = document.getElementById('s
       case 'nudge': return `NUDGE: ${m.nudges} LEFT`;
       case 'ladder': return 'COLLECT OR GAMBLE';
       case 'offer': return `${FEATURE_NAMES[config.trail.rungs[m.trail]]}: ${config.trail.offer === 'gamble' ? 'TAKE OR GAMBLE' : 'TAKE OR SPIN ON'}`;
-      case 'stop': return disp.lamp?.skill ? 'PRESS STOP!' : FEATURE_NAMES[disp.lamp?.feature] || 'GOOD LUCK';
+      case 'stop': return disp.lamp?.kind === 'loop' ? 'TAXI: PRESS STOP' : disp.lamp?.skill ? 'PRESS STOP!' : FEATURE_NAMES[disp.lamp?.feature] || 'GOOD LUCK';
       case 'free': return `FREE SPIN: ${m.freeSpins} LEFT`;
       case 'streak': return `${FEATURE_NAMES[m.streakFeature]}: PRESS START`;
       case 'loop': { const w = disp.loop?.shotName || 'SHOT'; return `${m.loop.shots} ${m.loop.shots === 1 ? w : w + 'S'} LEFT: ROLL`; }
@@ -466,7 +467,7 @@ export function startMachine(config, skin, { canvas = document.getElementById('s
         disp.held = e.lit;
         if (e.lit) { sound.award(); await wait(300); }
         break;
-      case 'question': say('? ' + (QM_TEXT[e.option] || e.option.toUpperCase()), 1400); sound.award(); await wait(900); break;
+      case 'question': say('? ' + (QM_TEXT[e.option] || FEATURE_NAMES[e.option] || e.option.toUpperCase()), 1400); sound.award(); await wait(900); break;
       case 'offer':
         message = `${e.rung}: ${FEATURE_NAMES[e.feature]}`;
         say(FEATURE_NAMES[e.feature], 1200); sound.fanfare(); await wait(600);
@@ -479,18 +480,24 @@ export function startMachine(config, skin, { canvas = document.getElementById('s
       case 'holdsOffered': sound.award(); await wait(200); break;
       case 'gambleWon': sound.fanfare(); break;
       case 'gambleLost': message = 'BUST'; sound.lose(); await wait(600); break;
-      case 'stopStart':
-        disp.lamp = { kind: e.kind, n: e.segments, pos: 0, board: e.board, skill: e.skill, feature: e.feature, speed: e.skill ? 0.22 : 0.3, stopping: false };
-        message = e.skill ? 'PRESS STOP!' : FEATURE_NAMES[e.feature] || 'GOOD LUCK';
+      case 'stopStart': {
+        const taxi = e.kind === 'loop';                              // a taxi ride round the loop board
+        disp.lamp = { kind: e.kind, n: e.segments, pos: taxi ? disp.loop.pos : 0, board: e.board, skill: e.skill, feature: e.feature, speed: taxi ? 0.1 : e.skill ? 0.22 : 0.3, stopping: false };
+        message = taxi ? 'TAXI: PRESS STOP' : e.skill ? 'PRESS STOP!' : FEATURE_NAMES[e.feature] || 'GOOD LUCK';
         if (!e.skill) pendingRandomStop = true;
         break;
+      }
       case 'stopped': {
         const lamp = disp.lamp;
         if (lamp) {
-          lamp.stopping = true; lamp.target = e.at; sound.gamble();
-          const t0 = performance.now();
-          while (!lamp.done && performance.now() - t0 < 4000) await wait(30);
-          lamp.pos = e.at; await wait(500);
+          if (lamp.skill) { lamp.speed = 0; lamp.pos = e.at; sound.stop(); await wait(700); }   // a skill stop stops dead where you pressed
+          else {
+            lamp.stopping = true; lamp.target = e.at; sound.gamble();
+            const t0 = performance.now();
+            while (!lamp.done && performance.now() - t0 < 4000) await wait(30);
+            lamp.pos = e.at; await wait(500);
+          }
+          if (lamp.kind === 'loop' && disp.loop) disp.loop.pos = e.at;
           disp.lamp = null;
         }
         if (e.kind === 'trail') say('STOPPED ON ' + (e.at + 1));
@@ -527,6 +534,18 @@ export function startMachine(config, skin, { canvas = document.getElementById('s
         for (let k = 1; k <= e.steps; k++) { L.pos = (e.from + k) % n; sound.lamp(); await wait(150); }
         break;
       }
+      case 'loopTaxi': if (disp.loop) disp.loop.pos = e.to; break;
+      case 'cashPot': disp.cashPot = e.pot; sound.tick(); break;
+      case 'cashPotWon':
+        disp.potFlash = true; say('CASH POT!', 1400); sound.fanfare(); await wait(1100);
+        disp.potFlash = false; disp.cashPot = e.pot;
+        break;
+      case 'repeatTry':
+        disp.repeat = 'try'; message = 'REPEAT?'; sound.gamble(); await wait(1300);
+        if (e.won) { disp.repeat = 'won'; say('REPEAT!', 1000); sound.fanfare(); await wait(600); }
+        else { message = 'NO REPEAT'; sound.lose(); await wait(500); }
+        disp.repeat = null;
+        break;
       case 'loopLand': {
         const L = disp.loop, sq = e.square, before = { bank: L.bank, level: L.level, shots: L.shots };
         Object.assign(L, { bank: e.bank, shots: e.shots, level: e.level, nudges: e.nudges, awards: e.awards, flash: true });
@@ -534,7 +553,7 @@ export function startMachine(config, skin, { canvas = document.getElementById('s
         const words = {
           cash: `+${money(sq.cash)}`, feature: (f?.name || '').toUpperCase(), nudges: `+${sq.count} NUDGES`,
           shots: `+${sq.count} ${sq.count === 1 ? L.shotName : L.shotName + 'S'}`, level: e.level > before.level ? 'LEVEL UP!' : 'TOP LEVEL',
-          half: 'BANK HALVED', miss: `LOSE A ${L.shotName}`, end: 'END!', bust: 'BUST!', go: 'GO',
+          half: 'BANK HALVED', miss: `LOSE A ${L.shotName}`, end: 'END!', bust: 'BUST!', go: 'GO', taxi: 'TAXI!',
         }[sq.type];
         if (words) say(words, 900);
         if (['half', 'miss', 'end', 'bust'].includes(sq.type)) sound.lose(); else if (sq.type !== 'go') sound.award();

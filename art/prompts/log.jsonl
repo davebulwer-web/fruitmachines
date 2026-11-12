@@ -52,3 +52,26 @@
 {"file": "lights.png", "size": [32, 32], "description": "traffic light with red amber and green lamps glowing", "seed": 4}
 {"file": "dice.png", "size": [32, 32], "description": "pair of fuzzy pink dice hanging on a string, car mirror ornament", "seed": 7}
 {"file": "cone.png", "size": [32, 32], "description": "orange and white striped traffic cone", "seed": 3}
+{"file": "keys.png", "size": [32, 32], "description": "bunch of three shiny gold car keys on a ring", "seed": 6}
+{"file": "moon.png", "size": [32, 32], "description": "bright yellow crescent moon with two small stars, night sky", "seed": 5}
+{"file": "meter.png", "size": [32, 32], "description": "old taxi fare meter box with glowing red digital display, no numbers", "seed": 8}
+{"file": "qm.png", "size": [32, 32], "description": "big glowing yellow question mark on a round black taxi roof light, no letters", "seed": 11}
+{"file": "clock.png", "size": [32, 32], "description": "ornate london clock tower at night with glowing clock face", "seed": 9}
+{"file": "sq-go.png", "size": [32, 32], "description": "green chequered start flag", "seed": 3}
+{"file": "sq-level.png", "size": [32, 32], "description": "golden up arrow with sparkles", "seed": 6}
+{"file": "sq-cash.png", "size": [32, 32], "description": "stack of gold coins and a banknote", "seed": 4}
+{"file": "sq-nudge.png", "size": [32, 32], "description": "fat red arrow pointing down", "seed": 5}
+{"file": "sq-fare.png", "size": [32, 32], "description": "small passenger figure waving to hail a taxi, raised arm", "seed": 7}
+{"file": "sq-half.png", "size": [32, 32], "description": "pink piggy bank", "seed": 8}
+{"file": "sq-end.png", "size": [32, 32], "description": "red no entry road sign, round with white bar", "seed": 9}
+{"file": "sq-taxi.png", "size": [32, 32], "description": "yellow glowing taxi roof light sign, no letters", "seed": 10}
+{"file": "sq-light.png", "size": [32, 32], "description": "single green traffic light lamp glowing bright green", "seed": 12}
+{"file": "sq-pot.png", "size": [32, 32], "description": "big gold pot full of coins, glowing", "seed": 11}
+{"file": "sq-hilo.png", "size": [32, 32], "description": "red up arrow and blue down arrow side by side", "seed": 13}
+{"file": "sq-lost.png", "size": [32, 32], "description": "brown leather suitcase with a luggage tag", "seed": 14}
+{"file": "sq-bus.png", "size": [32, 32], "description": "red double decker night bus side view", "seed": 16}
+{"file": "sq-rush.png", "size": [32, 32], "description": "speeding car with motion lines and a stopwatch", "seed": 15}
+{"file": "sq-pot.png", "size": [32, 32], "description": "big black cauldron pot overflowing with gold coins, glowing, no symbols", "seed": 22}
+{"file": "sq-hilo.png", "size": [32, 32], "description": "two arrows, one red arrow pointing straight up on the left, one blue arrow pointing straight down on the right", "seed": 21}
+{"file": "city-bg.png", "size": [256, 224], "description": "rainy city street at night, 1980s british town centre, row of shops with glowing windows, a taxi rank with a black cab under a street lamp, wet road reflections, purple and orange glow, absolutely no writing, no letters, no signs, 1980s arcade pixel art background", "seed": 41}
+{"note": "2026-11-12 Night Cab: city-bg.png = city-bg (seed 41) with shop-sign lettering painted out; board/sq-hilo.png = sq-hilo (seed 21) with the right arrow flipped to point down; sq-pot uses seed 22 cauldron"}
