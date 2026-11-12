@@ -13,7 +13,9 @@ import loopBoard from './features/loopBoard.js';
 import hiLo from './features/hiLo.js';
 import pick from './features/pick.js';
 import cashPot from './features/cashPot.js';
+import stepper from './features/stepper.js';
+import penalty from './features/penalty.js';
 import trail from './progressions/trail.js';
 
-export const featureKinds = { nudges, winSpin, ladder, boardStop, freeSpins, mystery, streak, jackpot, diceBoard, loopBoard, hiLo, pick, cashPot };
+export const featureKinds = { nudges, winSpin, ladder, boardStop, freeSpins, mystery, streak, jackpot, diceBoard, loopBoard, hiLo, pick, cashPot, stepper, penalty };
 export const progressions = { trail };

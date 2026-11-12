@@ -89,12 +89,15 @@ export class Machine {
     this.credit += amount;
     this.meters.out += amount;
     events.push({ type: 'win', amount, source });
-    // Repeat chance: a big reel win may pay again (config.repeat = { from, chance, sources }).
+    // Repeat chance: a big reel win may pay again (config.repeat = { from, chance, sources }, or { from, feature }).
     const rep = this.config.repeat;
     if (rep && amount >= rep.from && (rep.sources || ['line', 'held', 'nudge']).includes(source)) {
-      const won = this.rng.chance(rep.chance);
-      events.push({ type: 'repeatTry', won, amount });
-      if (won) this.pay(amount, 'repeat', events);
+      if (rep.feature) { this.repeatAmount = amount; this.queue.push(rep.feature); }   // played as a feature (e.g. a penalty)
+      else {
+        const won = this.rng.chance(rep.chance);
+        events.push({ type: 'repeatTry', won, amount });
+        if (won) this.pay(amount, 'repeat', events);
+      }
     }
   }
 

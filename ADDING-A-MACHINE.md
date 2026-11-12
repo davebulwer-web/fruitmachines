@@ -93,3 +93,11 @@ Then add any new events to `ui/shell.js` (playback) and the phase's buttons to `
 - `cashPot: { start, add, addChance, max }` in the config gives the machine a pot that grows after losing plays. Win it with a POT square, a feature `{ kind: 'cashPot' }`, or a ? option naming that feature id. The skin reads `g.disp.cashPot` to show it.
 - `repeat: { from, chance, sources }` gives a repeat chance on any win of at least `from` pence (reel wins by default). The skin can show a lamp from `g.disp.repeat` ('try' or 'won').
 - A ? option can now be any feature id; that feature plays straight away.
+
+
+## Steppers, Penalty and the dice board screen (added for Golden Goal)
+- `{ kind: 'stepper', steps, multiplier, button }`: the reels step up and down on their own; the player presses the button while a win shows. Uses the core skill-stop lamp (kind 'stepper').
+- `repeat: { from, feature: 'penalty' }` with `{ kind: 'penalty', chance }`: big reel wins earn a spot kick (phase 'penalty', action shoot 0/1/2). The panel uses the art keys `keeper` and `ball` if the machine has them.
+- Dice boards (`kind: 'diceBoard'`) can share squares from `config.boards[id]` (with `name`, `maxRolls`, `words` for the ladder/snake/lose banners) and start further up with `start`. They now have a big screen, ui/dice-board.js, styled with `skin.diceTheme` and `skin.diceIcons`.
+- Bots may return `[action, arg]`.
+- New machines must be imported in ui/arcade.js as well as listed in machines/index.js.

@@ -37,7 +37,7 @@ export function resolve(m, s, rng, record) {
         if (!def.bot) throw new Error(`phase ${m.phase} has no bot for the simulator`);
         const action = def.bot(m, s.profile);
         if (action == null) return;                                // e.g. spin on (a paid spin)
-        record(m.act(action));
+        record(Array.isArray(action) ? m.act(...action) : m.act(action));
       }
     }
   }

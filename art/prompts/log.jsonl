@@ -75,3 +75,23 @@
 {"file": "sq-hilo.png", "size": [32, 32], "description": "two arrows, one red arrow pointing straight up on the left, one blue arrow pointing straight down on the right", "seed": 21}
 {"file": "city-bg.png", "size": [256, 224], "description": "rainy city street at night, 1980s british town centre, row of shops with glowing windows, a taxi rank with a black cab under a street lamp, wet road reflections, purple and orange glow, absolutely no writing, no letters, no signs, 1980s arcade pixel art background", "seed": 41}
 {"note": "2026-11-12 Night Cab: city-bg.png = city-bg (seed 41) with shop-sign lettering painted out; board/sq-hilo.png = sq-hilo (seed 21) with the right arrow flipped to point down; sq-pot uses seed 22 cauldron"}
+{"file": "whistle.png", "size": [32, 32], "description": "shiny silver referee whistle on a red cord", "seed": 3}
+{"file": "scarf.png", "size": [32, 32], "description": "red and white striped football scarf with tassels", "seed": 5}
+{"file": "stadium-bg.png", "size": [256, 224], "description": "inside a 1980s british football stadium at night, green pitch, packed terraces, four tall floodlights glowing, goal at the far end, absolutely no writing, no letters, no signs, no advertising boards, 1980s arcade pixel art background", "seed": 51}
+{"file": "boot.png", "size": [32, 32], "description": "black football boot with white studs and red stripes", "seed": 4}
+{"file": "shirt.png", "size": [32, 32], "description": "blue football shirt with white collar, no number, no letters", "seed": 6}
+{"file": "ball.png", "size": [32, 32], "description": "classic black and white football", "seed": 7}
+{"file": "flag.png", "size": [32, 32], "description": "yellow corner flag on a white pole", "seed": 8}
+{"file": "medal.png", "size": [32, 32], "description": "gold medal with a red and white ribbon", "seed": 9}
+{"file": "qm.png", "size": [32, 32], "description": "big glowing yellow question mark on a black and white football, no letters", "seed": 11}
+{"file": "trophy.png", "size": [32, 32], "description": "big shiny gold football cup trophy with two handles", "seed": 10}
+{"file": "keeper.png", "size": [32, 32], "description": "football goalkeeper front view, arms spread wide, green jersey, yellow gloves, full body", "seed": 12}
+{"file": "sq-tackle.png", "size": [32, 32], "description": "red sliding football boot tackle with dust cloud", "seed": 14}
+{"file": "sq-through.png", "size": [32, 32], "description": "green arrow curving forward with a football at its tip", "seed": 13}
+{"file": "sq-red.png", "size": [32, 32], "description": "referee holding up a bright red card", "seed": 15}
+{"file": "sq-free.png", "size": [32, 32], "description": "football in front of a defensive wall of three players", "seed": 16}
+{"file": "sq-hat.png", "size": [32, 32], "description": "three footballs stacked in a pyramid", "seed": 17}
+{"file": "sq-go.png", "size": [32, 32], "description": "white football on the centre spot of a green pitch, kick off", "seed": 23}
+{"file": "ball.png", "size": [32, 32], "description": "white leather football with black pentagon patches, bright white, round", "seed": 21}
+{"file": "sq-free.png", "size": [32, 32], "description": "football resting on grass in front of a small row of three defenders standing shoulder to shoulder", "seed": 22}
+{"note": "2026-11-12 Golden Goal: stadium-bg.png = stadium-bg (seed 51) with a roof sign patched over; ball seed 21, sq-free seed 22, sq-go seed 23 are the kept versions"}
