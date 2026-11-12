@@ -86,3 +86,10 @@ A feature exports `start(m, f, id, events)`, and can add `init(m)` and `phases`.
 allowed in it (`play: 'paid' | 'free' | false`), its `actions` (each `(m, arg, events)`), and a `bot(m, profile)`
 that the simulator uses to choose an action. Finish with `m.afterFeature(events)`. `diceBoard.js` is a good model.
 Then add any new events to `ui/shell.js` (playback) and the phase's buttons to `controlsFor` there.
+
+
+## Taxi squares, Cash Pot and Repeat chance (added for Night Cab)
+- Loop board squares `TAXI` (skill-stop lamp round the board, ride to where you stop it) and `POT` (wins the cash pot into the bank). Give them pictures with `loopIcons.taxi` / `loopIcons.pot` and colours with `loopTheme.taxi` / `loopTheme.pot`.
+- `cashPot: { start, add, addChance, max }` in the config gives the machine a pot that grows after losing plays. Win it with a POT square, a feature `{ kind: 'cashPot' }`, or a ? option naming that feature id. The skin reads `g.disp.cashPot` to show it.
+- `repeat: { from, chance, sources }` gives a repeat chance on any win of at least `from` pence (reel wins by default). The skin can show a lamp from `g.disp.repeat` ('try' or 'won').
+- A ? option can now be any feature id; that feature plays straight away.

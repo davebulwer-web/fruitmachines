@@ -1,13 +1,13 @@
 // The dedicated board screen for a looping board feature. While the board runs it takes over the
 // whole top glass and the paytable (y 3 to 290) so the squares are big enough to read.
 // A skin can restyle it with skin.loopTheme = { ground, edge, cash, feature, nudges, shots, level, risk, go }
-// and give squares pictures with skin.loopIcons = { go, cash, nudges, level, shots, miss, half, end, bust,
+// and give squares pictures with skin.loopIcons = { go, cash, nudges, level, shots, miss, half, end, bust, taxi, pot,
 // feature: { featureId: imageKey } } (image keys from the machine's art pack). A square with a picture
 // shows only a small number where one is needed (cash amount, how many nudges or shots).
 
 const DEFAULT_THEME = {
   ground: '#0c0814', edge: '#3a2840', go: '#e8e0d0', cash: '#1f5a2a', feature: '#1f4a7a', nudges: '#16606a',
-  shots: '#5a2a7a', level: '#7a5a10', risk: '#7a1420', ink: '#f4ead8', dim: '#a090a8',
+  shots: '#5a2a7a', level: '#7a5a10', risk: '#7a1420', ink: '#f4ead8', dim: '#a090a8', taxi: '#c8a010', pot: '#8a6a10',
 };
 export const LOOP_AREA = { x: 3, y: 3, w: 264, h: 287 };
 
@@ -35,12 +35,14 @@ function squareText(s, g, shot) {
     case 'end': return ['END', ''];
     case 'miss': return ['LOSE', 'A ' + shot];
     case 'bust': return ['BUST', ''];
+    case 'taxi': return ['TAXI', ''];
+    case 'pot': return ['CASH', 'POT'];
   }
   return ['', ''];
 }
 
 function squareFill(s, T) {
-  return { go: T.go, cash: T.cash, feature: T.feature, nudges: T.nudges, shots: T.shots, level: T.level, half: T.risk, miss: T.risk, end: T.risk, bust: T.risk }[s.type] || T.edge;
+  return { go: T.go, cash: T.cash, feature: T.feature, nudges: T.nudges, shots: T.shots, level: T.level, half: T.risk, miss: T.risk, end: T.risk, bust: T.risk, taxi: T.taxi, pot: T.pot }[s.type] || T.edge;
 }
 
 function drawDie(g, x, y, size, face, lit) {
@@ -58,6 +60,7 @@ function squareNumber(s, g) {
   if (s.type === 'cash') return g.money(s.cash);
   if (s.type === 'nudges' || s.type === 'shots') return `+${s.count}`;
   if (s.type === 'miss') return '-1';
+  if (s.type === 'pot') return g.money(g.disp.cashPot);
   return '';
 }
 
@@ -73,7 +76,8 @@ export function drawLoopBoard(g, theme = {}, icons = {}) {
   frameBox(A.x, A.y, A.w, A.h, T.ground, C.cabinetEdge);
   const cw = Math.floor((A.w - 6) / cols), ch = Math.floor((A.h - 6) / rows);
   const ox = A.x + Math.floor((A.w - cw * cols) / 2), oy = A.y + Math.floor((A.h - ch * rows) / 2);
-  const at = Math.round(L.pos) % squares.length;
+  const lamp = g.disp.lamp, taxi = lamp?.kind === 'loop';     // a taxi lamp racing round the board
+  const at = Math.round(taxi ? lamp.pos : L.pos) % squares.length;
 
   squares.forEach((s, i) => {
     const [c, r] = loopCell(i, cols, rows), x = ox + c * cw, y = oy + r * ch;
@@ -81,7 +85,7 @@ export function drawLoopBoard(g, theme = {}, icons = {}) {
     rect(x, y, cw, ch, '#000');
     rect(x + 1, y + 1, cw - 2, ch - 2, squareFill(s, T));
     if (here) {
-      const lit = L.flash ? blink(3) : blink(10);
+      const lit = L.flash || taxi ? blink(3) : blink(10);
       g.ctx.strokeStyle = lit ? C.gold : '#fff'; g.ctx.lineWidth = 2;
       g.ctx.strokeRect(x + 2, y + 2, cw - 4, ch - 4);
     }
