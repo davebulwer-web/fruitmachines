@@ -81,6 +81,13 @@ if (MACHINES.length % 3 !== 0) {
   li.append(b);
   list.append(li);
 }
+// Pixel Pinball, when it is built next to this project (build.mjs sets the address for dist/index.html)
+if (window.PINBALL_LINK) {
+  const a = document.getElementById('pinball');
+  a.href = window.PINBALL_LINK;
+  if (lobbyArt.pinball) { const img = el('img'); img.src = lobbyArt.pinball; img.alt = 'Fun Fair pinball table'; a.prepend(img); }
+  a.hidden = false;
+}
 back.addEventListener('click', showLobby);
 window.addEventListener('keydown', e => { if (e.key === 'Escape' && current) showLobby(); });
 

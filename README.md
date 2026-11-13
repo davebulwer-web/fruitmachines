@@ -14,6 +14,11 @@ Open `dist/index.html` (the arcade lobby) or one machine's page, such as `dist/r
 Controls: START or Space to play, the buttons under the reels (keys 1 to 3) to hold and to nudge,
 C to collect or take, G to gamble or roll, M to mute, Esc back to the lobby.
 
+The lobby links through to [Pixel Pinball](https://github.com/davebulwer-web/pinball) when the two projects sit
+side by side: both checked out in one folder, or both on GitHub Pages under one account. The address is
+`PINBALL_LINK` in `build.mjs`, and the picture is `art/pinball-preview.png` (copied from the pinball project's
+`tables/funfair/preview.png`).
+
 ## Layout
 
 - `engine/`: the game engine. No screen code.

@@ -71,6 +71,18 @@
   .soon:hover { transform: none; box-shadow: 0 10px 0 #05020a, 0 0 0 1px #000; }
   .soon .screen > div { aspect-ratio: 270 / 480; display: grid; place-items: center; border: 2px dashed var(--cabinet-edge); border-radius: 4px; font: 10px/1.8 var(--display); color: var(--dim); }
 
+  /* the way through to Pixel Pinball, when the two projects are built side by side */
+  .pinball {
+    display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: center; text-decoration: none; color: var(--ink);
+    background: var(--cabinet); border: 3px solid var(--cabinet-edge); border-radius: 14px; padding: 14px; max-width: 560px; justify-self: center;
+    box-shadow: 0 10px 0 #05020a, 0 0 0 1px #000; transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .pinball:hover, .pinball:focus-visible { transform: translateY(-4px); box-shadow: 0 14px 0 #05020a, 0 0 22px var(--neon-2); outline: none; border-color: var(--neon-2); }
+  .pinball img { width: 96px; aspect-ratio: 320 / 560; image-rendering: pixelated; border-radius: 4px; box-shadow: 0 0 0 2px #000; }
+  .pb-text { display: grid; gap: 10px; justify-items: start; text-align: left; }
+  .pb-sign { font: 16px/1.4 var(--display); color: #ffe6f6; text-shadow: 0 0 4px #fff, 0 0 10px var(--neon); }
+  .pb-sign span { color: #e6fbff; text-shadow: 0 0 4px #fff, 0 0 10px var(--neon-2); }
+  .pinball .play { justify-self: start; }
   .note { text-align: center; color: var(--dim); font-size: 19px; margin: 0; }
   .note b { font-weight: normal; color: var(--gold); }
 
@@ -101,6 +113,9 @@
       <p class="strap">10P A GO &middot; PLAY MONEY ONLY</p>
     </header>
     <ul id="machines" aria-label="Machines"></ul>
+    <a id="pinball" class="pinball" hidden>
+      <span class="pb-text"><span class="pb-sign">PIXEL <span>PINBALL</span></span><span class="tag">Next door: pinball tables, 1 to 4 players.</span><span class="play">PLAY PINBALL</span></span>
+    </a>
     <p class="note"><b>SPACE</b> start &nbsp; <b>1-3</b> hold or nudge &nbsp; <b>C</b> collect or take &nbsp; <b>G</b> gamble or roll &nbsp; <b>M</b> mute &nbsp; <b>ESC</b> back here</p>
   </div>
 </main>
