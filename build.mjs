@@ -25,9 +25,13 @@ for (const id of machineIds) {
   console.log(`built dist/${id}.html`);
 }
 // lobby art: the arcade backdrop and each machine's preview (from previews.cjs, if it has been run)
-const lobby = { backdrop: uri('art/arcade-bg.png'), previews: {} };
+const lobby = { backdrop: uri('art/arcade-bg.png'), previews: {}, pinball: uri('art/pinball-preview.png') };
 for (const id of machineIds) if (existsSync(`machines/${id}/preview.png`)) lobby.previews[id] = uri(`machines/${id}/preview.png`);
 const arcade = { title: 'Fruit Machine Arcade', art: `window.MACHINE_ARTS=${JSON.stringify(arts)};window.ARCADE_ART=${JSON.stringify(lobby)}`, js: await bundle('ui/arcade.js') };
 writeFileSync('dist/arcade-artifact.html', fill('ui/arcade.html', arcade));
-writeFileSync('dist/index.html', `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">\n${fill('ui/arcade.html', arcade)}</head></html>`.replace('</style>', '</style></head><body>').replace('</head></html>', '</body></html>'));
+// Pixel Pinball (github.com/davebulwer-web/pinball), when the two projects sit side by side: both checked
+// out in one folder, or both on GitHub Pages under one account. Only the offline page links to it.
+const PINBALL_LINK = '../../pinball/dist/index.html';
+const withLink = { ...arcade, art: `window.PINBALL_LINK=${JSON.stringify(PINBALL_LINK)};${arcade.art}` };
+writeFileSync('dist/index.html', `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">\n${fill('ui/arcade.html', withLink)}</head></html>`.replace('</style>', '</style></head><body>').replace('</head></html>', '</body></html>'));
 console.log('built dist/index.html and dist/arcade-artifact.html');
